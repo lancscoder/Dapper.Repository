@@ -11,10 +11,10 @@ namespace Dapper.Repository.Core.Extensions
 		{
 			var attribute = type.GetCustomAttributes(typeof(Table), true).FirstOrDefault() as Table;
 
-			return attribute != null && !String.IsNullOrWhiteSpace(attribute.Name) ? attribute.Name :type.Name;
+			return attribute != null && !String.IsNullOrWhiteSpace(attribute.Name) ? attribute.Name : type.Name;
 		}
 
-		public static string GetKeyName(this Type type)
+		public static KeyValuePair<string, string> GetKeyName(this Type type)
 		{
 			foreach (var property in type.GetProperties())
 			{
@@ -22,13 +22,15 @@ namespace Dapper.Repository.Core.Extensions
 
 				if (attribute == null) continue;
 
-				return !String.IsNullOrWhiteSpace(attribute.Name) ? attribute.Name : property.Name;
+				return !String.IsNullOrWhiteSpace(attribute.Name) ?
+					new KeyValuePair<string, string>( property.Name, attribute.Name) :
+					new KeyValuePair<string, string>(property.Name, property.Name);
 			}
 
 			throw new MissingFieldException("No key provided");
 		}
 
-		public static IEnumerable<string> GetColumnNames(this Type type)
+		public static IEnumerable<KeyValuePair<string, string>> GetColumnNames(this Type type)
 		{
 			foreach (var property in type.GetProperties())
 			{
@@ -38,11 +40,11 @@ namespace Dapper.Repository.Core.Extensions
 
 				if (!String.IsNullOrWhiteSpace(attribute.Name))
 				{
-					yield return attribute.Name;
+					yield return new KeyValuePair<string, string>(property.Name, attribute.Name);
 				}
 				else
 				{
-					yield return property.Name;
+					yield return new KeyValuePair<string, string>(property.Name, property.Name);
 				}
 			}
 		}

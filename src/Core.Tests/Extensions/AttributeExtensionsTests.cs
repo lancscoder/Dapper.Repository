@@ -55,13 +55,15 @@ namespace Dapper.Repository.Core.Tests.Extensions
 		{
 			// Arrange
 			var c = typeof(ClassOne);
-			var expectedName = "Key";
+			var expectedKey = "Id";
+			var expectedValue = "Key";
 
 			// Act
-			var actualName = c.GetKeyName();
+			var actual = c.GetKeyName();
 
 			// Assert
-			Assert.Equal(expectedName, actualName);
+			Assert.Equal(expectedKey, actual.Key);
+			Assert.Equal(expectedValue, actual.Value);
 		}
 
 		[Fact]
@@ -69,13 +71,15 @@ namespace Dapper.Repository.Core.Tests.Extensions
 		{
 			// Arrange
 			var c = typeof(ClassTwo);
-			var expectedName = "Id";
+			var expectedKey = "Id";
+			var expectedValue = "Id";
 
 			// Act
-			var actualName = c.GetKeyName();
+			var actual = c.GetKeyName();
 
 			// Assert
-			Assert.Equal(expectedName, actualName);
+			Assert.Equal(expectedKey, actual.Key);
+			Assert.Equal(expectedValue, actual.Value);
 		}
 
 		[Fact]
@@ -105,8 +109,10 @@ namespace Dapper.Repository.Core.Tests.Extensions
 
 			// Assert
 			Assert.Equal(expectedCount, names.Count());
-			Assert.Equal("Column1", names[0]);
-			Assert.Equal("Column2", names[1]);
+			Assert.Equal("ColumnOne", names[0].Key);
+			Assert.Equal("Column1", names[0].Value);
+			Assert.Equal("ColumnTwo", names[1].Key);
+			Assert.Equal("Column2", names[1].Value);
 		}
 
 		[Fact]
@@ -121,8 +127,10 @@ namespace Dapper.Repository.Core.Tests.Extensions
 
 			// Assert
 			Assert.Equal(expectedCount, names.Count());
-			Assert.Equal("ColumnOne", names[0]);
-			Assert.Equal("ColumnTwo", names[1]);
+			Assert.Equal("ColumnOne", names[0].Key);
+			Assert.Equal("ColumnOne", names[0].Value);
+			Assert.Equal("ColumnTwo", names[1].Key);
+			Assert.Equal("ColumnTwo", names[1].Value);
 		}
 
 		[Fact]
@@ -137,8 +145,10 @@ namespace Dapper.Repository.Core.Tests.Extensions
 
 			// Assert
 			Assert.Equal(expectedCount, names.Count());
-			Assert.Equal("Column1", names[0]);
-			Assert.Equal("ColumnTwo", names[1]);
+			Assert.Equal("ColumnOne", names[0].Key);
+			Assert.Equal("Column1", names[0].Value);
+			Assert.Equal("ColumnTwo", names[1].Key);
+			Assert.Equal("ColumnTwo", names[1].Value);
 		}
 
 		[Table("TableOne")]
