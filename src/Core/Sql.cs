@@ -1,12 +1,15 @@
-﻿using Dapper.Repository.Core.Attributes;
+﻿using System;
+using System.Linq.Expressions;
 
 namespace Dapper.Repository.Core
 {
 	public static class Sql<T> where T : class 
 	{
-		public static SelectBuilder<T> Get()
+		public static Select<T> Get(params Expression<Func<T, object>>[] columns)
 		{
-			return new SelectBuilder<T>();
+			return new Select<T>(columns);
 		}
+
+		// TODO : Count...should this be another property type?
 	}
 }

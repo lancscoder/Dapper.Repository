@@ -2,20 +2,16 @@ using System;
 
 namespace Dapper.Repository.Core.Attributes
 {
-	[AttributeUsage(AttributeTargets.Property)]
-	public class Column : Attribute
+	[AttributeUsage(AttributeTargets.Property, AllowMultiple = false)]
+	public class Column : GenericTableAttribute
 	{
-		private readonly string _name;
-
-		public string Name { get { return _name; } }
-
 		public Column()
 		{
 		}
 
 		public Column(string name)
+			: base(name)
 		{
-			_name = name;
 		}
 	}
 }

@@ -2,20 +2,16 @@
 
 namespace Dapper.Repository.Core.Attributes
 {
-	[AttributeUsage(AttributeTargets.Property)]
-	public class Key : Attribute
+	[AttributeUsage(AttributeTargets.Property, AllowMultiple = false)]
+	public class Key : GenericTableAttribute
 	{
-		private readonly string _name;
-
-		public string Name { get { return _name; } }
-
 		public Key()
 		{
 		}
 
 		public Key(string name)
+			: base(name)
 		{
-			_name = name;
 		}
 	}
 }

@@ -22,9 +22,7 @@ namespace Dapper.Repository.Core.Extensions
 
 				if (attribute == null) continue;
 
-				return !String.IsNullOrWhiteSpace(attribute.Name) ?
-					new KeyValuePair<string, string>( property.Name, attribute.Name) :
-					new KeyValuePair<string, string>(property.Name, property.Name);
+				return attribute.GetKeyValueDetails(property.Name);
 			}
 
 			throw new MissingFieldException("No key provided");
@@ -38,15 +36,15 @@ namespace Dapper.Repository.Core.Extensions
 
 				if (attribute == null) continue;
 
-				if (!String.IsNullOrWhiteSpace(attribute.Name))
-				{
-					yield return new KeyValuePair<string, string>(property.Name, attribute.Name);
-				}
-				else
-				{
-					yield return new KeyValuePair<string, string>(property.Name, property.Name);
-				}
+				yield return attribute.GetKeyValueDetails(property.Name);
 			}
+		}
+
+		public static KeyValuePair<string, string> GetKeyValueDetails(this GenericTableAttribute attribute, string memberName)
+		{
+			return !String.IsNullOrWhiteSpace(attribute.Name) ?
+				new KeyValuePair<string, string>(memberName, attribute.Name) :
+				new KeyValuePair<string, string>(memberName, memberName);
 		}
 	}
 }
